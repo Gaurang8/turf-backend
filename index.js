@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 app.use('/api/v1/user', userRoutes);
 
 const corsOption = {
-  origin: "http://localhost:3000", // Fixed typo
+  origin: "*", // Fixed typo
   credentials: true, // Fixed the property name
 };
 app.use(cors(corsOption));
