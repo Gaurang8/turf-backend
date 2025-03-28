@@ -72,7 +72,7 @@ export const register = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { id: newUser._id, role: newUser.role }, // Payload
+      { id: newUser._id, role: newUser.role , name: newUser.name }, // Payload
       process.env.JWT_SECRET, // Secret key (store in .env)
       { expiresIn: "7d" } // Token expiry
     );
@@ -134,7 +134,7 @@ export const login = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { id: user._id, role: user.role }, // Payload
+      { id: user._id, role: user.role , name: user.name }, // Payload
       process.env.JWT_SECRET, // Secret key (store in .env)
       { expiresIn: "7d" } // Token expiry
     );
