@@ -14,7 +14,7 @@ export const register = async (req, res) => {
       });
     }
 
-    // Validate that either email or phone is provided, but not both
+    // Validate required fields
     if (!name || !password || (!email && !phone)) {
       return res.status(400).json({
         message: "Username, password, and either email or phone are required",
@@ -29,7 +29,7 @@ export const register = async (req, res) => {
       });
     }
 
-    // Check if username is already taken
+    // Check if username, email, or phone is already taken
     const existingUser = await User.findOne({ name });
     if (existingUser) {
       return res.status(400).json({
@@ -38,7 +38,6 @@ export const register = async (req, res) => {
       });
     }
 
-    // Check if email or phone is already registered
     if (email) {
       const existingEmail = await User.findOne({ email });
       if (existingEmail) {
@@ -63,7 +62,7 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create the new user
-    await User.create({
+    const newUser = await User.create({
       name,
       email: email || null,
       phone: phone || null,
@@ -71,9 +70,24 @@ export const register = async (req, res) => {
       role: "user",
     });
 
+    // Generate JWT token
+    const token = jwt.sign(
+      { id: newUser._id, role: newUser.role }, // Payload
+      process.env.JWT_SECRET, // Secret key (store in .env)
+      { expiresIn: "7d" } // Token expiry
+    );
+
     return res.status(201).json({
-      message: "Account created successfully, please log in",
+      message: "Account created successfully",
       success: true,
+      token, // Send token after registration
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        phone: newUser.phone,
+        role: newUser.role,
+      },
     });
   } catch (error) {
     console.error(error);
@@ -83,6 +97,7 @@ export const register = async (req, res) => {
     });
   }
 };
+
 
 export const login = async (req, res) => {
   try {
