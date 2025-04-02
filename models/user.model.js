@@ -36,6 +36,12 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "user"],
       default: "user",
     },
+    avatar: {
+      type: String,
+      enum: ["", "avatar1", "avatar2", "avatar3", "avatar4", "avatar5"],
+      default: "", // Default empty value
+    },
+    deleted: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
