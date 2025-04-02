@@ -3,13 +3,13 @@ import { register, login, forgotPassword, verifyOtpAndResetPassword, updateProfi
 
 const router=express.Router();
 
-router.route('/register').post(register);
-router.route('/login').post(login);
+router.route('/register').post(register);  // done
+router.route('/login').post(login);  // done
 router.route('/initiate-forgot-password').post(forgotPassword)
 router.route('/verify-otp-generate-password').post(verifyOtpAndResetPassword)
 router.route('/update-profile').post(updateProfile)
 router.route("/update-avatar").patch(updateAvatar);
-router.route("/deactivate-account").patch(deactivateAccount);
+router.route("/deactivate-account").patch(deactivateAccount);  // 
 router.route("/list-users").get(listUsers)
 
 router.route('/appointment-confirmation').post(confirmAppointment)
