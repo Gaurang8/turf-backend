@@ -9,7 +9,7 @@ router.route('/initiate-forgot-password').post(forgotPassword)
 router.route('/verify-otp-generate-password').post(verifyOtpAndResetPassword)
 router.route('/update-profile').post(updateProfile)
 router.route("/update-avatar").patch(updateAvatar);
-router.route("/deactivate-account").patch(deactivateAccount);  // 
+router.route("/deactivate-account").patch(deactivateAccount);  // done
 router.route("/list-users").get(listUsers)
 
 router.route('/appointment-confirmation').post(confirmAppointment)
